@@ -2,8 +2,8 @@ class UsersApi < Grape::API
 
   helpers do
     def load_user!
-      Napa::Logger.logger.info "Retrieving User: #{params[:id]}"
-      user =  User.where(id: params[:id]).first
+      Napa::Logger.logger.info "Retrieving User by hashed screen name: #{params[:id]}"
+      user =  User.where(hashed_screen_name: params[:id]).first
       if user
         return user
       else

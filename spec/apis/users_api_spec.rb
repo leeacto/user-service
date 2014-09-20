@@ -8,15 +8,15 @@ describe UsersApi do
   include Rack::Test::Methods
 
   describe 'get /:id' do
-    context 'with valid attributes' do
+    context 'with valid hashed_screen_name' do
       it 'returns the correct user' do
         u = FactoryGirl.create(:user)
-        get "/users/#{u.id}"
+        get "/users/#{u.hashed_screen_name}"
         expect(parsed_response[:data].id).to eq u.id.to_s
       end
     end
 
-    context 'with invalid attributes' do
+    context 'with invalid hashed_screen_name' do
       it 'returns User Not Found error' do
         get "/users/0"
         expected_error = Hashie::Mash.new({ code: 'api_error', message: 'User Not Found' })
