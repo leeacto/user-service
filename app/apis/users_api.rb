@@ -1,26 +1,26 @@
 class UsersApi < Grape::API
+
+  helpers do
+    def load_user!
+      Napa::Logger.logger.info "Retrieving User: #{params[:id]}"
+      user =  User.where(id: params[:id]).first
+      if user
+        return user
+      else
+        Napa::Logger.logger.info "User #{params[:id]} Not Found"
+        error! "User Not Found", 404
+      end
+    end
+  end
+
   desc 'Get a list of users'
   params do
     optional :ids, type: Array, desc: 'Array of user ids'
   end
+
   get do
     users = params[:ids] ? User.where(id: params[:ids]) : User.all
     represent users, with: UserRepresenter
-  end
-
-  desc 'Get a single user'
-  params do
-    requires :id, type: Integer, desc: 'ID of User'
-  end
-  get ':id' do
-    Napa::Logger.logger.info "Retrieving User: #{params[:id]}"
-    user =  User.where(id: params[:id]).first
-    if user
-      represent user, with: UserRepresenter
-    else
-      Napa::Logger.logger.info "User #{params[:id]} Not Found"
-      error! "User Not Found", 404
-    end
   end
 
   desc 'Create a user'
@@ -48,7 +48,7 @@ class UsersApi < Grape::API
   route_param :id do
     desc 'Get a user'
     get do
-      user = User.find(params[:id])
+      user = load_user!
       represent user, with: UserRepresenter
     end
 
@@ -60,7 +60,7 @@ class UsersApi < Grape::API
     end
     put do
       # fetch user record and update attributes.  exceptions caught in app.rb
-      user = User.find(params[:id])
+      user = load_user!
       user.update_attributes!(permitted_params)
       represent user, with: UserRepresenter
     end
