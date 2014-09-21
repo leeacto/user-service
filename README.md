@@ -6,7 +6,7 @@ This Rack app is a small service to be used in conjunction with Belly's Check-In
 User Service runs on Ruby 2.0.0-p247. Please install with your favorite version manager.
 
 ## Installation
-* Clone User Service from [example-link](https://github.com/leeacto/user-service)
+* Clone User Service from [here](https://github.com/leeacto/user-service)
 * Run <code>bundle install</code>
 * Run <code>rake db:reset; RACK_ENV=test rake db:reset</code> to create the database
 * Run <code>rake db:migrate; RACK_ENV=test rake db:migrate</code> to create tables
