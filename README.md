@@ -8,9 +8,8 @@ User Service runs on Ruby 2.0.0-p247. Please install with your favorite version 
 ## Installation
 * Clone User Service from [here](https://github.com/leeacto/user-service)
 * Run <code>bundle install</code>
-* Run <code>rake db:reset; RACK_ENV=test rake db:reset</code> to create the database
+* Run <code>rake db:create; RACK_ENV=test rake db:create</code> to create the database
 * Run <code>rake db:migrate; RACK_ENV=test rake db:migrate</code> to create tables
-* Run <code>rake db:seed</code> to add sample data to be used by other services
 
 ## Usage
 User Service provides API endpoints to create and update users (resource name: users)
